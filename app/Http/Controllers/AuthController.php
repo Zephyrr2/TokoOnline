@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -14,6 +16,13 @@ class AuthController
 
     public function login(){
         return view('login');
+    }
+    public function registerAdmin(){
+        return view('registerAdmin');
+    }
+
+    public function loginAdmin(){
+        return view('loginAdmin');
     }
 
     function reg(Request $request){
@@ -39,14 +48,50 @@ class AuthController
         $user = User::where('email', $email)->first();
 
         if ($user && Hash::check($password, $user->password)) {
-            $request->session()->put('id_admin', $user->id_admin);
+            $request->session()->put('user', true);
+            $request->session()->put('id_user', $user->id_user);
             return redirect('barang');
         } else {
             echo "Email atau password salah, Silahkan diulang kembali.";
         }
     }
 
+    function regAdmin(Request $request){
+        $nama = htmlspecialchars($request->input('username'));
+        $email = htmlspecialchars($request->input('email'));
+        $password = htmlspecialchars($request->input('password'));
+
+        $HashedPass = Hash::make($password);
+
+        $user = new Admin;
+        $user->username = $nama;
+        $user->email = $email;
+        $user->password = $HashedPass;
+        $user->save();
+
+        return redirect('/admin/login');
+    }
+
+    function adminLoginProcess(Request $request){
+        $email = htmlspecialchars($request->input('email'));
+        $password = htmlspecialchars($request->input('password'));
+
+        $admin = Admin::where('email', $email)->first();
+        $barang = Barang::all();
+
+        if ($admin && Hash::check($password, $admin->password)) {
+            $request->session()->put('admin', true);
+            $request->session()->put('id_admin', $admin->id_admin);
+            return redirect('/admin/barang');
+            echo "Email atau password salah, Silahkan diulang kembali.";
+        }
+        else {
+            return redirect('/admin/login');
+        }
+    }
+
     public function logout(Request $request){
+        $request->session()->forget('admin');
         $request->session()->forget('id_admin');
         return redirect('login');
     }

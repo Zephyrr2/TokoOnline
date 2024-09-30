@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Konfirmasi Pesanan</title>
     <link rel="stylesheet" href="{{asset('css/formorder.css')}}">
 </head>
 <body>
@@ -11,11 +11,11 @@
         <div class="header">
             <h1>Konfirmasi Pesanan</h1>
         </div>
-        <form action="{{ url('submit-order') }}" method="POST">
+        <form action="{{ url('/checkout/process') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="nama" name="nama" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="address">Alamat</label>
-                <textarea name="address" id="address" rows="3" required></textarea>
+                <textarea name="alamat" id="alamat" rows="3" required></textarea>
             </div>
             <div class="order-summary">
                 <h2>Ringkasan Pesanan</h2>

@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="{{ asset('css/barang.css') }}">
 </head>
 <body>
-    <link rel="stylesheet" href="{{asset('css/navbar.css')}}">
+    <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
 
-    <div class="navbar">
-        <div class="navbar-header">
+    <div class="sidebar">
+        <div class="sidebar-header">
             <h3>TokoOnline Menu</h3>
         </div>
-        <ul class="navbar-menu">
-            <li><a href="{{ url('/barang/tambah') }}"><i class="fas fa-home"></i>Tambah Barang</a></li>
-            <li><a href="{{url('/logout')}}"><i class="fas fa-user"></i> Logout</a></li>
+        <ul class="sidebar-menu">
+            <li><a href="{{ url ('/admin/barang')}}"><i class="fas fa-plus"></i>Barang</a></li>
+            <li><a href="{{ url('/barang/tambah') }}"><i class="fas fa-plus"></i>Tambah Barang</a></li>
+            <li><a href="{{ url('/logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </div>
 
@@ -28,7 +29,6 @@
                 <p class="card-text">{{$brg->deskripsi}}</p>
                 <p class="card-text">{{$brg->harga}}</p>
                 <div class="button-container">
-                    <a href="#" class="btn btn-detail">Detail</a>
                     <a href="{{url('barang/edit/' . $brg->id_barang)}}" class="btn btn-edit">Edit</a>
                     <form action="{{url('barang/delete')}}" method="post">
                         @method('delete')

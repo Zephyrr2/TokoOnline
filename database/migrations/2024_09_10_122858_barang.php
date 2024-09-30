@@ -30,10 +30,23 @@ return new class extends Migration
 
         Schema::create('transaksi', function (Blueprint $table) {
             $table->increments('id_transaksi');
+            $table->integer('id_user');
+            $table->string('nama');
+            $table->string('alamat');
             $table->text('trans_code');
             $table->integer('id_barang');
             $table->integer('jumlah_barang');
             $table->integer('total_harga');
+            $table->timestamps();
+        });
+
+        Schema::create('order', function (Blueprint $table) {
+            $table->increments('id_order');
+            $table->integer('id_transaksi');
+            $table->integer('id_user');
+            $table->string('nama');
+            $table->string('email');
+            $table->string('alamat');
             $table->timestamps();
         });
     }
@@ -46,5 +59,6 @@ return new class extends Migration
         Schema::dropIfExists('barang');
         Schema::dropIfExists('cart');
         Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('order');
     }
 };

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Cart;
 use App\Models\Transaksi;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -21,7 +22,13 @@ class HomeController
 
     public function tampilBarangAdmin(){
         $barang = Barang::all();
-        return view('adminBarang', compact('barang'));
+
+        $sesi = session('admin');
+        if($sesi == true){
+            return view('dashboard', compact('barang'));
+        }else{
+            return redirect('/admin/login');
+        }
     }
 
     public function Cart(){
@@ -66,7 +73,10 @@ class HomeController
         }
     }
 
-    public function checkoutProcess(){
+    public function checkoutProcess(Request $request){
+        $nama = $request->input('nama');
+        $alamat = $request->input('alamat');
+        $id_user = session('id_user');
         $cart = Cart::join('barang','barang.id_barang','=','cart.id_barang')
         ->select('cart.id_barang','barang.harga','barang.nama_barang','cart.jumlah_barang')
         ->get();
@@ -76,6 +86,9 @@ class HomeController
 
         foreach($cart as $keranjang){
             $transaction = new Transaksi;
+            $transaction->nama = $nama;
+            $transaction->alamat = $alamat;
+            $transaction->id_user = $id_user;
             $transaction->trans_code = $trans_code;
             $transaction->id_barang = $keranjang->id_barang;
             $transaction->jumlah_barang = $keranjang->jumlah_barang;
@@ -87,16 +100,17 @@ class HomeController
 
         Cart::truncate();
 
-        return redirect('order/confirm');
+        return redirect('/barang');
     }
 
     public function orderConfirm(){
-        $trans = Transaksi::select('trans_code','nama_barang','jumlah_barang','harga')
-        ->join('barang','barang.id_barang','=','transaksi.id_barang')
-        ->orderBy('transaksi.created_at')
+        $trans = Cart::select('cart.id_barang', 'barang.harga', 'barang.nama_barang', 'cart.jumlah_barang')
+        ->join('barang','barang.id_barang','=','cart.id_barang')
         ->get();
 
-        return view('confirmOrder', compact('trans'));
+        $barang = Barang::all();
+
+        return view('confirmOrder', compact('trans', 'barang'));
     }
 
     function prosesTambahBarang(Request $request){
@@ -120,9 +134,9 @@ class HomeController
         $barang->save();
 
         if($barang){
-            return redirect('adminBarang')->with('success', 'Data berhasil ditambahkan');
+            return redirect('/admin/barang')->with('success', 'Data berhasil ditambahkan');
         }else{
-            return redirect('adminBarang')->with('eror', 'Data gagal ditambahkan');
+            return redirect('/barang/tambah')->with('eror', 'Data gagal ditambahkan');
         }
     }
 
@@ -138,11 +152,13 @@ class HomeController
         $deskripsi = $request->input('deskripsi');
         $foto = $request->file('foto');
 
-        $path = public_path() . '/image/';
+        $path = public_path() . '/image';
 
         $query = Barang::where('id_barang', $id_barang)->first();
 
         $foto_lama = $query->foto;
+
+        $thumb = $query->foto;
 
         if ($foto) {
             $thumb = $foto->getClientOriginalName();
@@ -151,17 +167,17 @@ class HomeController
         }
 
         $query->nama_barang = $nama_barang;
-        $query->deskripsi = $deskripsi;
         $query->harga = $harga;
         $query->stok = $stok;
-        $query->foto = $foto = $thumb;
+        $query->deskripsi = $deskripsi;
+        $query->foto = $thumb;
         $query->save();
 
         if($query){
-            return redirect('barang');
+            return redirect('/admin/barang');
         }else{
             echo "Barang tidak dapat diubah";
-            return redirect('barang');
+            return redirect('/admin/barang');
         }
     }
 
@@ -174,19 +190,17 @@ class HomeController
         $id_barang = $request->input('id_barang');
         $brg = Barang::where('id_barang', $id_barang)->first();
 
-        $path = public_path() . '/image/';
+        $path = public_path() . '/image';
 
         $foto_barang = $brg->foto;
 
         if ($brg) {
             $brg->delete();
             File::delete($path . '/' . $foto_barang);
-            return redirect('barang');
+            return redirect('/admin/barang');
         }else{
             echo "Barang tidak ada!!!";
-            return redirect('barang');
+            return redirect('/admin/barang');
         }
     }
-
-
 }

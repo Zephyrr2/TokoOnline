@@ -11,7 +11,7 @@
         <h2>Edit {{$barang->nama_barang}}</h2>
         <form action="{{url('barang/edit/proses/')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="barang_id" value="{{$barang->id_barang}}">
+            <input type="hidden" name="id_barang" value="{{$barang->id_barang}}">
             <div class="form-group">
                 <label for="nama_barang">Nama Barang</label>
                 <input type="text" name="nama_barang" value="{{$barang->nama_barang}}">

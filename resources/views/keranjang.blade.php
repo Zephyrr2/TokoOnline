@@ -51,7 +51,7 @@
             </tfoot>
         </table>
         <div class="action-buttons">
-            <form action="{{url('/order/process')}}" method="POST" class="checkout-form">
+            <form action="{{url('/order/confirm')}}" method="get" class="checkout-form">
                 @csrf
                 <button type="submit" class="btn btn-primary">Checkout</button>
             </form>
@@ -59,7 +59,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxPMoFkaXCwL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
         function updateQty(id, qty) {
