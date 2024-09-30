@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\File;
 class HomeController
 {
     public function index(){
-        return view('home');
+        $barang = Barang::all();
+        return view('home', compact('barang'));
     }
 
     public function tampilBarang(){

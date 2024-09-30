@@ -32,3 +32,6 @@ Route::get('cart', [HomeController::class, 'Cart']);
 Route::post('cart/update', [HomeController::class, 'updateCart']);
 Route::get('order/confirm', [HomeController::class, 'orderConfirm']);
 Route::post('/checkout/process', [HomeController::class, 'checkoutProcess']);
+
+Route::get('/admin/customer', [AuthController::class, 'tampilCustomer']);
+Route::Delete('/customer/delete', [AuthController::class, 'hapusCustomer']);

@@ -27,6 +27,7 @@
 </style>
 
 <link rel="stylesheet" href="{{asset('css/navbar.css')}}">
+<link rel="stylesheet" href="{{asset('css/barang.css')}}">
 
 <div class="navbar">
     <div class="navbar-header">
@@ -44,3 +45,23 @@
         <h2 class="home-title">Selamat Datang di Toko Online</h2>
     </div>
 </div>
+
+@forelse($barang as $brg)
+    <div class="container">
+        <div class="card">
+            <img class="card-img" src="{{ asset('image/' . $brg->foto) }}" alt="{{ $brg->nama_barang }}">
+            <div class="card-body">
+                <h5 class="card-tittle">{{$brg->nama_barang}}</h5>
+                <p class="card-text">{{$brg->deskripsi}}</p>
+                <p class="card-text">{{$brg->harga}}</p>
+                <div class="button-container">
+                    <a href="#" class="btn btn-detail">Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @empty
+    <div class="no-products">
+        <p>Barang tidak ditemukan.</p>
+    </div>
+@endforelse

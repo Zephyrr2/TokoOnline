@@ -15,6 +15,7 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="{{ url ('/admin/barang')}}"><i class="fas fa-plus"></i>Barang</a></li>
+            <li><a href="{{ url('/admin/customer') }}"><i class="fas fa-plus"></i>Data Customer</a></li>
             <li><a href="{{ url('/barang/tambah') }}"><i class="fas fa-plus"></i>Tambah Barang</a></li>
             <li><a href="{{ url('/logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>

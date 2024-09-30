@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Barang;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -94,5 +95,24 @@ class AuthController
         $request->session()->forget('admin');
         $request->session()->forget('id_admin');
         return redirect('login');
+    }
+
+    public function tampilCustomer(){
+        $customer = Transaksi::select('user.id_user', 'transaksi.nama', 'user.email', 'transaksi.alamat')
+        ->join('user', 'user.id_user', '=', 'transaksi.id_transaksi')
+        ->get();
+        return view('data_customer', compact('customer'));
+    }
+
+    function hapusCustomer(Request $request){
+        $id_user = $request->input('id_user');
+        $user = User::where('id_user', $id_user)->first();
+        if ($user) {
+            $user->delete();
+            return redirect('/admin/customer');
+        }else{
+            return redirect('/admin/customer')->with('error', 'Data gagal dihapus.');
+        }
+
     }
 }

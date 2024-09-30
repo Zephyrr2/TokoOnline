@@ -30,7 +30,7 @@
                     <td class="product-name">{{$item->nama_barang}}</td>
                     <td class="product-price">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                     <td>
-                        <input type="number" name="qty" value="{{ $item->jumlah_barang }}" class="quantity-input" onkeyup="updateQty"({{ $item->id_cart }}, this.value)">
+                        <input type="number" name="jumlah_barang" value="{{ $item->jumlah_barang }}" class="quantity-input" onkeyup="updateQty"({{ $item->id_cart }}, this.value)">
                     </td>
                     <td class="subtotal">Rp {{ number_format($item->harga * $item->jumlah_barang, 0, ',', '.') }}</td>
                 </tr>
