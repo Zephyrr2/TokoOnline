@@ -18,10 +18,6 @@
                 <input type="text" id="nama" name="nama" required>
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
                 <label for="address">Alamat</label>
                 <textarea name="alamat" id="alamat" rows="3" required></textarea>
             </div>
