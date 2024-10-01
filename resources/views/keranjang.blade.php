@@ -51,10 +51,14 @@
             </tfoot>
         </table>
         <div class="action-buttons">
+            @if ($isLoggedIn == true)
             <form action="{{url('/order/confirm')}}" method="get" class="checkout-form">
                 @csrf
                 <button type="submit" class="btn btn-primary">Checkout</button>
             </form>
+            @else
+            <a href="{{url('/login')}}" class="btn btn-primary">Login untuk Checkout</a>
+            @endif
             <a href="{{url('/barang')}}" class="btn btn-secondary">Lanjut Belanja</a>
         </div>
     </div>

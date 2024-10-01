@@ -35,7 +35,8 @@ class HomeController
     public function Cart(){
         $cart = Cart::join('barang','barang.id_barang','=','cart.id_barang')
         ->get();
-        return view('keranjang', compact('cart'));
+        $isLoggedIn = session()->has('user');
+        return view('keranjang', compact('cart', 'isLoggedIn'));
     }
 
     function addToCart(Request $request){

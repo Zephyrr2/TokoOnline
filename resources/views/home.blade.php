@@ -56,6 +56,12 @@
                 <p class="card-text">{{$brg->harga}}</p>
                 <div class="button-container">
                     <a href="#" class="btn btn-detail">Detail</a>
+                    <form action="{{url('cart/process')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id_barang" value="{{$brg->id_barang}}">
+                        <input type="hidden" name="jumlah_barang" value="1">
+                        <button type="submit" class="btn btn-edit">Tambah Ke Keranjang</button>
+                    </form>
                 </div>
             </div>
         </div>
