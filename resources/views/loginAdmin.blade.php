@@ -15,8 +15,9 @@
             <input type="email" id="email" name="email" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
-            <button type="submit">Masuk</button>
+            <button type="submit">Signin</button>
         </form>
+        <p class="register-link">don't have an account? <a href="{{ url('/admin/register') }}">Signup</a></p>
     </div>
 </body>
 </html>
