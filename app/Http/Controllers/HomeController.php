@@ -94,8 +94,8 @@ class HomeController
             $transaction->trans_code = $trans_code;
             $transaction->id_barang = $keranjang->id_barang;
             $transaction->jumlah_barang = $keranjang->jumlah_barang;
-            $subtotal = $keranjang->total_harga * $keranjang->jumah_barang;
-            $total =+ $subtotal;
+            $subtotal = $keranjang->harga * $keranjang->jumah_barang;
+            $total = $total =+ $subtotal;
             $transaction->total_harga = $total;
             $transaction->save();
         }
